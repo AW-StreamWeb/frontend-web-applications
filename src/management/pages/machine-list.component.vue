@@ -5,7 +5,7 @@
     <h1>MACHINES</h1>
     <div>
       <div class="card">
-        <pv-toolbar class="mb-4">
+        <pv-toolbar class="mb-4 bg-white-alpha-10">
           <template #start>
             <pv-button
               label="New"
@@ -40,7 +40,7 @@
           :filters="filters"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} tutorials"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} machines"
           responsiveLayout="scroll"
         >
           <template #header>
@@ -71,7 +71,7 @@
           ></pv-column>
           <pv-column
             field="name"
-            header="Name"
+            header="Title"
             :sortable="true"
             style="min-width: 8rem"
           ></pv-column>
@@ -85,13 +85,13 @@
             field="lifetime"
             header="Lifetime"
             :sortable="true"
-            style="min-width: 12rem"
+            style="min-width: 8rem"
           ></pv-column>
           <pv-column
             field="status"
             header="Status"
             :sortable="true"
-            style="min-width: 12rem"
+            style="min-width: 8rem"
           >
             <template #body="slotProps">
               <pv-tag
@@ -157,12 +157,11 @@
         </div>
         <div class="field">
           <span class="p-float-label">
-            <pv-textarea
-              id="lifetime"
-              v-model="machine.lifetime"
-              required="false"
-              rows="2"
-              cols="2"
+            <pv-input-mask
+            id="lifetime"
+            v-model="machine.lifetime"
+            mask="99/99/9999"
+            required="true"
             />
             <label for="lifetime">Lifetime</label>
           </span>

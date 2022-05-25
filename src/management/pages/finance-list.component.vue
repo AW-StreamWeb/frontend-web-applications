@@ -5,7 +5,7 @@
     <h1>FINANCES</h1>
     <div>
       <div class="card">
-        <pv-toolbar class="mb-4">
+        <pv-toolbar class="mb-4 bg-white-alpha-10">
           <template #start>
             <pv-button
               label="New"
@@ -43,11 +43,11 @@
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} finances"
           responsiveLayout="scroll"
         >
-          <template #header>
+          <template #header >
             <div
-              class="table-header flex flex-column md:flex-row md:justify-content-between"
-            >
-              <h5 class="mb-2 md:m-0 p-as-md-center text-xl">
+              class="table-header flex flex-column md:flex-row md:justify-content-between "
+            > 
+              <h5 class="mb-2 md:m-0 p-as-md-center text-xl ">
                 Manage Finances
               </h5>
               <span class="p-input-icon-left"
@@ -408,4 +408,6 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

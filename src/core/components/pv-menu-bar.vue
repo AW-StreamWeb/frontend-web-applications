@@ -1,7 +1,7 @@
 <template>
 
 <header>
-  <pv-menubar :model="items" class="justify-content-between">
+  <pv-menubar :model="items" class="justify-content-between bg-blue-900">
     <template #start>
       <img
         alt="logo"

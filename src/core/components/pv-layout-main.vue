@@ -14,6 +14,7 @@ export default {
 
 <style scoped>
 .layout-main-container {
+  
   display: flex;
   flex-direction: column;
   min-height: 90vh;

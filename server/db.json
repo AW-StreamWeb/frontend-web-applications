@@ -4,15 +4,15 @@
       "id": 9,
       "name": "dsdaddasdasd",
       "description": "dasdsadas",
-      "lifetime": "dasdasda",
-      "active": true
+      "lifetime": "11/11/1111",
+      "active": false
     },
     {
       "id": 10,
       "name": "adasdasd",
       "description": "dsadsadsadsa",
-      "lifetime": "dasdsadsadsa",
-      "active": true
+      "lifetime": "11/11/1111",
+      "active": false
     },
     {
       "id": 11,
@@ -23,13 +23,6 @@
     }
   ],
   "finances": [
-    {
-      "id": 8,
-      "name": "hola como estas",
-      "day": "11/11/1111",
-      "quantity": 50,
-      "type": true
-    },
     {
       "id": 9,
       "name": "asdasd",
