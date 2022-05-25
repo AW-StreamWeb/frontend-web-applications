@@ -10,7 +10,7 @@ import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 
-
+import InputMask from 'primevue/inputmask';
 import Menubar from "primevue/menubar";
 import InputText from "primevue/inputtext";
 import TieredMenu from 'primevue/tieredmenu';
@@ -56,6 +56,7 @@ app.use(PrimeVue, {ripple: true },{
 
 app.use(ToastService);
 
+app.component("pv-input-mask", InputMask);
 app.component("pv-menubar", Menubar);
 app.component("pv-input-text", InputText);
 app.component("tiered-menu", TieredMenu);

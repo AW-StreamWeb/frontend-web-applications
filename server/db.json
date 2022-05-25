@@ -24,18 +24,11 @@
   ],
   "finances": [
     {
-      "id": 7,
-      "name": "VENTA DE PRODUCTOS dsd s",
-      "day": "12/05/2000 ds ds",
-      "quantity": "500 s ds",
-      "type": false
-    },
-    {
       "id": 8,
-      "name": "5485454d sds",
-      "day": "569+5986d sd s",
-      "quantity": "+66545965dsd s",
-      "type": false
+      "name": "hola como estas",
+      "day": "11/11/1111",
+      "quantity": 50,
+      "type": true
     },
     {
       "id": 9,

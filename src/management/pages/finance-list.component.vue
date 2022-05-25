@@ -40,7 +40,7 @@
           :filters="filters"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} tutorials"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} finances"
           responsiveLayout="scroll"
         >
           <template #header>
@@ -71,7 +71,7 @@
           ></pv-column>
           <pv-column
             field="name"
-            header="Name"
+            header="Title"
             :sortable="true"
             style="min-width: 8rem"
           ></pv-column>
@@ -145,24 +145,23 @@
         </div>
         <div class="field">
           <span class="p-float-label">
-            <pv-textarea
-              id="day"
-              v-model="finance.day"
-              required="false"
-              rows="2"
-              cols="2"
+            <pv-input-mask
+            id="day"
+            v-model="finance.day"
+            mask="99/99/9999"
+            required="true"
             />
             <label for="description">Day</label>
           </span>
         </div>
         <div class="field">
           <span class="p-float-label">
-            <pv-textarea
+            <pv-inputnumber
               id="quantity"
               v-model="finance.quantity"
-              required="false"
-              rows="2"
-              cols="2"
+              mode="currency"
+              currency="PEN" 
+              locale="en-US"
             />
             <label for="description">Quantity</label>
           </span>
