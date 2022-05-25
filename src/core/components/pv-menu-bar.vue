@@ -1,6 +1,6 @@
 <template>
 
-<header class="relative">
+<header>
   <pv-menubar :model="items" class="justify-content-between">
     <template #start>
       <img
