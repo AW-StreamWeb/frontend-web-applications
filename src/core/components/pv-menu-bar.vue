@@ -1,19 +1,22 @@
 <template>
 
-    <pv-menubar :model="items" class=" flex justify-content-between">
-      <template #start>
-        <img
-          alt="logo"
-          src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png"
-          height="40"
-          class="mr-5"
-        />
+<header>
+  <pv-menubar :model="items" class="justify-content-between">
+    <template #start>
+      <img
+        alt="logo"
+        src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png"
+        height="40"
+        class="mr-5"
+      />
+    </template>
+    <template #end>
+      <pv-input-text placeholder="Search" type="text" />
+    </template>
+  </pv-menubar>
+</header>
+      
 
-      </template>
-      <template #end>
-        <pv-input-text placeholder="Search" type="text" />
-      </template>
-    </pv-menubar>
 
 </template>
 
@@ -43,5 +46,5 @@ export default {
 </script>
 
 <style scoped>
-
+  
 </style>
