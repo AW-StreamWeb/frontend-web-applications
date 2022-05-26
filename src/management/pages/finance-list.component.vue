@@ -4,6 +4,46 @@
   <pv-layout-main>
     <h1>FINANCES</h1>
     <div>
+      <div class="px-4 py-5 md:px-6 lg:px-8">
+        <div class="grid justify-content-center">
+          <div class="col-12 md:col-6 lg:col-3">
+            <div class="surface-card shadow-2 p-3 border-round">
+              <div class="flex justify-content-between mb-3">
+                <div>
+                  <span class="block text-500 font-bold mb-3">Incomes</span>
+                  <div class="text-900 font-bold text-xl">
+                   {{IncomeTotal}}
+                  </div>
+                </div>
+                <div
+                  class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                  style="width: 2.5rem; height: 2.5rem"
+                >
+                  <i class="pi pi-sort-down text-blue-500 text-xl"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 md:col-6 lg:col-3">
+            <div class="surface-card shadow-2 p-3 border-round">
+              <div class="flex justify-content-between mb-3">
+                <div>
+                  <span class="block text-500 font-bold mb-3">Spents</span>
+                  <div class="text-900 font-bold text-xl">
+                    {{SpentTotal}}
+                  </div>
+                </div>
+                <div
+                  class="flex align-items-center justify-content-center bg-cyan-100 border-round"
+                  style="width: 2.5rem; height: 2.5rem"
+                >
+                  <i class="pi pi-sort-up text-cyan-500 text-xl"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="card">
         <pv-toolbar class="mb-4 bg-white-alpha-10">
           <template #start>
@@ -43,11 +83,11 @@
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} finances"
           responsiveLayout="scroll"
         >
-          <template #header >
+          <template #header>
             <div
-              class="table-header flex flex-column md:flex-row md:justify-content-between "
-            > 
-              <h5 class="mb-2 md:m-0 p-as-md-center text-xl ">
+              class="table-header flex flex-column md:flex-row md:justify-content-between"
+            >
+              <h5 class="mb-2 md:m-0 p-as-md-center text-xl">
                 Manage Finances
               </h5>
               <span class="p-input-icon-left"
@@ -146,10 +186,10 @@
         <div class="field">
           <span class="p-float-label">
             <pv-input-mask
-            id="day"
-            v-model="finance.day"
-            mask="99/99/9999"
-            required="true"
+              id="day"
+              v-model="finance.day"
+              mask="99/99/9999"
+              required="true"
             />
             <label for="description">Day</label>
           </span>
@@ -160,7 +200,7 @@
               id="quantity"
               v-model="finance.quantity"
               mode="currency"
-              currency="PEN" 
+              currency="PEN"
               locale="en-US"
             />
             <label for="description">Quantity</label>
@@ -298,6 +338,7 @@ export default {
     this.initFilters();
   },
   methods: {
+    
     getDisplayableFinance(finance) {
       finance.status = finance.type
         ? this.statuses[0].label
@@ -404,10 +445,34 @@ export default {
       });
       this.deleteFinancesDialog = false;
     },
+    formatCurrency(value) {
+      return value.toLocaleString("en-US", {
+        style: "currency",
+        currency: "PEN",
+      });
+    },
   },
+  computed: {
+    SpentTotal() {
+      let total = 0;
+      for(let finance of this.finances){
+        if(finance.status=="Spent"){
+          total+=finance.quantity;
+        }
+      }
+      return this.formatCurrency(total);
+    },
+    IncomeTotal() {
+      let total = 0;
+      for(let finance of this.finances){
+        if(finance.status=="Income"){
+          total+=finance.quantity;
+        }
+      }
+      return this.formatCurrency(total);
+    },
+  }
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

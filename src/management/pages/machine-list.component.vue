@@ -95,7 +95,7 @@
           >
             <template #body="slotProps">
               <pv-tag
-                v-if="slotProps.data.status === 'Published'"
+                v-if="slotProps.data.status === 'Active'"
                 severity="success"
                 >{{ slotProps.data.status }}</pv-tag
               >

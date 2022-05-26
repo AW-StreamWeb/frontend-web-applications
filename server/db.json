@@ -36,6 +36,13 @@
       "day": "26/05/2022",
       "quantity": 600,
       "type": true
+    },
+    {
+      "id": 11,
+      "name": "Venta Diaria",
+      "day": "26/05/2022",
+      "quantity": 300,
+      "type": true
     }
   ],
   "products": [
