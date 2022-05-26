@@ -25,16 +25,16 @@
   "finances": [
     {
       "id": 9,
-      "name": "asdasd",
-      "day": "dasdsad",
-      "quantity": "dasdsad",
+      "name": "Comprar de material",
+      "day": "26/05/2022",
+      "quantity": 500,
       "type": false
     },
     {
       "id": 10,
-      "name": "sasas",
-      "day": "asagsgsdf",
-      "quantity": "dsfhfrgsfd",
+      "name": "Venta Diaria",
+      "day": "26/05/2022",
+      "quantity": 600,
       "type": true
     }
   ],

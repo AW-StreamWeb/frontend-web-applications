@@ -35,7 +35,7 @@ import Tree from 'primevue/tree';
 import RadioButton from 'primevue/radiobutton';
 import InputNumber from 'primevue/inputnumber';
 import FileUpload from 'primevue/fileupload';
-
+import Message from 'primevue/message';
 
 const app = createApp(App);
 
@@ -56,6 +56,7 @@ app.use(PrimeVue, {ripple: true },{
 
 app.use(ToastService);
 
+app.component("pv-message", Message);
 app.component("pv-input-mask", InputMask);
 app.component("pv-menubar", Menubar);
 app.component("pv-input-text", InputText);

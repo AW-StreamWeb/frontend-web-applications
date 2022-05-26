@@ -2,7 +2,7 @@
   <pv-menu-bar></pv-menu-bar>
   <pv-tiered-menu></pv-tiered-menu>
   <pv-layout-main>
-    <h1>THESE ARE MY NOTIFICATIONS</h1>
+    <h1>NOTIFICATIONS</h1>
   </pv-layout-main>
 </template>
 
