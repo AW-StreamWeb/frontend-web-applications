@@ -212,7 +212,7 @@
             v-model="finance.status"
             :options="statuses"
             optionLabel="label"
-            placeholder="Select an Type"
+            placeholder="Select an Status"
           >
             <template #value="slotProps">
               <div v-if="slotProps.value && slotProps.value.value">
@@ -338,7 +338,6 @@ export default {
     this.initFilters();
   },
   methods: {
-    
     getDisplayableFinance(finance) {
       finance.status = finance.type
         ? this.statuses[0].label
@@ -346,6 +345,7 @@ export default {
       return finance;
     },
     getStorableFinance(displayableFinance) {
+      console.log(displayableFinance);
       return {
         id: displayableFinance.id,
         name: displayableFinance.name,
@@ -374,21 +374,12 @@ export default {
     saveFinance() {
       this.submitted = true;
       if (this.finance.name.trim()) {
+        //console.log(this.finance.name.trim());
         if (this.finance.id) {
-          this.finance = this.getStorableFinance(this.finance);
-          this.financesService
-            .update(this.finance.id, this.finance)
-            .then((response) => {
-              this.finances[this.findIndexById(response.data.id)] =
-                this.getDisplayableFinance(response.data);
-              this.$toast.add({
-                severity: "success",
-                summary: "Successful",
-                detail: "Finance Updated",
-                life: 3000,
-              });
-              console.log(response);
-            });
+          //console.log(this.finance.id);
+          this.finance.status = this.finance.status.label ? this.finance.status.label: this.finance.status;
+                    this.finances[this.findIndexById(this.finance.id)] = this.finance;
+                    this.$toast.add({severity:'success', summary: 'Successful', detail: 'Finance Updated', life: 3000});
         } else {
           this.finance.id = 0;
           this.finance = this.getStorableFinance(this.finance);
@@ -396,9 +387,9 @@ export default {
             this.finance = this.getDisplayableFinance(response.data);
             this.finances.push(this.finance);
             this.$toast.add({
-              severity: "success",
-              summary: "Successful",
-              detail: "Finance Created",
+              severity: 'success',
+              summary: 'Successful',
+              detail: 'Finance Created',
               life: 3000,
             });
             console.log(response);
@@ -409,6 +400,7 @@ export default {
       this.finance = {};
     },
     editFinance(finance) {
+      //console.log(finance.status)
       this.finance = { ...finance };
       this.financeDialog = true;
     },
