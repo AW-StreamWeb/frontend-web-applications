@@ -2,7 +2,7 @@
   <div class="layout-sidebar align-content-center">
     <tiered-menu :model="items" class="bg-blue-700 block font-normal " >
     </tiered-menu>
-    <input-switch class="ml-3 mt-5"  v-model="checked" ></input-switch>
+    <pv-split-button class="ml-3 mt-5" label="Language" :model="languages"></pv-split-button>
   </div>
 </template>
 
@@ -12,12 +12,25 @@ export default {
   data() {
     return {
       checked: false,
+      languages:[
+        {
+          label: "ES",
+          command: ()=>{
+            this.changeToSpanish();
+          }
+        },
+        {
+          label: "EN",
+          command: ()=>{
+            this.changeToEnglish();
+          }
+        }
+      ],
       items: [
         {
-          label: 'Home',
+          label: "Home",
           icon: "pi pi-fw pi-home",
           to: "/home",
-
         },
         {
           label: "Inventory",
@@ -52,9 +65,21 @@ export default {
   },
   methods: {
     changeToSpanish() {
-      this.$primevue.config.locale.home = 'Inicio';
-      this.$primevue.config.locale.inventory = 'Inventario';
-    }
+      this.items[0].label="Inicio";
+      this.items[1].label="Inventario";
+      this.items[2].label="Contactos";
+      this.items[3].label="Maquinas";
+      this.items[4].label="Finanzas";
+      this.items[5].label="Cerrar Sesion";
+    },
+    changeToEnglish() {
+      this.items[0].label="Home";
+      this.items[1].label="Inventory";
+      this.items[2].label="Contacts";
+      this.items[3].label="Machines";
+      this.items[4].label="Finances";
+      this.items[5].label="Logout";
+    },
   }
 };
 </script>

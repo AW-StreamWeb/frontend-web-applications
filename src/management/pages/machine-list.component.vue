@@ -336,20 +336,9 @@ export default {
       this.submitted = true;
       if (this.machine.name.trim()) {
         if (this.machine.id) {
-          this.machine = this.getStorableMachine(this.machine);
-          this.machinesService
-            .update(this.machine.id, this.machine)
-            .then((response) => {
-              this.machines[this.findIndexById(response.data.id)] =
-                this.getDisplayableMachine(response.data);
-              this.$toast.add({
-                severity: "success",
-                summary: "Successful",
-                detail: "Machine Updated",
-                life: 3000,
-              });
-              console.log(response);
-            });
+          this.machine.status = this.machine.status.label ? this.machine.status.label: this.machine.status;
+                    this.machines[this.findIndexById(this.machine.id)] = this.machine;
+                    this.$toast.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
         } else {
           this.machine.id = 0;
           this.machine = this.getStorableMachine(this.machine);

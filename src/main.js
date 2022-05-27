@@ -9,7 +9,7 @@ import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 
-import ColumnGroup from 'primevue/columngroup'; 
+import ColumnGroup from "primevue/columngroup";
 import InputMask from "primevue/inputmask";
 import Menubar from "primevue/menubar";
 import InputText from "primevue/inputtext";
@@ -36,7 +36,8 @@ import RadioButton from "primevue/radiobutton";
 import InputNumber from "primevue/inputnumber";
 import FileUpload from "primevue/fileupload";
 import Message from "primevue/message";
-import Row from 'primevue/row'; 
+import Row from "primevue/row";
+import SplitButton from 'primevue/splitbutton';
 
 const app = createApp(App);
 
@@ -61,6 +62,7 @@ app.use(
 
 app.use(ToastService);
 
+app.component("pv-split-button", SplitButton);
 app.component("pv-row", Row);
 app.component("pv-column-group", ColumnGroup);
 app.component("pv-message", Message);

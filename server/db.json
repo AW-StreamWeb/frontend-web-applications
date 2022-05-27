@@ -18,7 +18,7 @@
       "id": 11,
       "name": "Visitas_Comprobante_de_Entradas",
       "description": "dsdsds",
-      "lifetime": "dsdsds",
+      "lifetime": "11/11/1111",
       "active": false
     }
   ],
@@ -32,17 +32,24 @@
     },
     {
       "id": 10,
-      "name": "Venta Diaria",
+      "name": "Ventas Diarias",
       "day": "26/05/2022",
       "quantity": 600,
       "type": true
     },
     {
       "id": 11,
-      "name": "Venta Diaria",
+      "name": "Ventas Diarias",
       "day": "26/05/2022",
       "quantity": 300,
       "type": true
+    },
+    {
+      "id": 12,
+      "name": "Compra Tela",
+      "day": "26/05/2022",
+      "quantity": 200,
+      "type": false
     }
   ],
   "products": [
