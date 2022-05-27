@@ -37,6 +37,7 @@ import InputNumber from "primevue/inputnumber";
 import FileUpload from "primevue/fileupload";
 import Message from "primevue/message";
 import Row from "primevue/row";
+import SplitButton from 'primevue/splitbutton';
 
 const app = createApp(App);
 
@@ -61,6 +62,7 @@ app.use(
 
 app.use(ToastService);
 
+app.component("pv-split-button", SplitButton);
 app.component("pv-row", Row);
 app.component("pv-column-group", ColumnGroup);
 app.component("pv-message", Message);
