@@ -2,13 +2,20 @@
   <div class="layout-sidebar align-content-center">
     <tiered-menu :model="items" class="bg-blue-700 block font-normal " >
     </tiered-menu>
+    <pv-button class="pi pi-fw pi-power-off" @click="this.signOut()"></pv-button>
     <pv-split-button class="ml-3 mt-5" label="Language" :model="languages"></pv-split-button>
   </div>
 </template>
 
 <script>
+import UsersApiService from "../../management/services/users-api.service";
+
 export default {
   name: "pv-tiered-menu",
+  UserService:null,
+  created() {
+    this.UserService=new UsersApiService();
+  },
   data() {
     return {
       checked: false,
@@ -55,15 +62,14 @@ export default {
         {
           separator: true,
         },
-        {
-          label: "Logout",
-          icon: "pi pi-fw pi-power-off",
-          to: "/",
-        },
       ],
     };
   },
   methods: {
+    signOut(){
+      this.UserService.signOut();
+      this.$router.push("/")
+    },
     changeToSpanish() {
       this.items[0].label="Inicio";
       this.items[1].label="Inventario";

@@ -120,6 +120,7 @@
           </pv-column>
         </pv-data-table>
       </div>
+      <pv-toast />
       <pv-dialog
         v-model:visible="machineDialog"
         :style="{ width: '450px' }"

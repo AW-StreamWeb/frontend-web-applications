@@ -17,22 +17,29 @@
         </pv-toolbar>
 
         <pv-data-table ref="dt" :value="products" v-model:selection="selectedProducts" dataKey="id"
-                      :paginator="true" :rows="10" :filters="filters"
-                      paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" :rowsPerPageOptions="[5,10,25]"
-                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" responsiveLayout="scroll">
+                       :paginator="true"
+                       :rows="10"
+                       :filters="filters"
+                       paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                       :rowsPerPageOptions="[5, 10, 25]"
+                       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+                       responsiveLayout="scroll"
+        >
           <template #header>
             <div class="table-header flex flex-column md:flex-row md:justiify-content-between">
               <h5 class="mb-2 md:m-0 p-as-md-center">Manage Products</h5>
               <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                    <pv-input-text v-model="filters['global'].value" placeholder="Search..." />
-                </span>
+                <i class="pi pi-search" />
+                <pv-input-text
+                  v-model="filters['global'].value"
+                  placeholder="Search..."
+                />
+              </span>
             </div>
           </template>
 
           <pv-column selectionMode="multiple" style="width: 3rem" :exportable="false"></pv-column>
-          <pv-column field="code" header="Code" :sortable="true" style="min-width:12rem"></pv-column>
-          <pv-column field="name" header="Name" :sortable="true" style="min-width:16rem"></pv-column>
+          <pv-column field="name" header="Name" :sortable="true" style="min-width:9rem"></pv-column>
           <pv-column header="Image">
             <template #body="slotProps">
               <img src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png" :alt="slotProps.data.image" class="product-image" />
@@ -45,7 +52,7 @@
           </pv-column>
           <pv-column field="category" header="Category" :sortable="true" style="min-width:10rem"></pv-column>
 
-          <pv-column field="inventoryStatus" header="Status" :sortable="true" style="min-width:12rem">
+          <pv-column field="inventoryStatus" header="inventoryStatus" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
               <span :class="'product-badge status-' + (slotProps.data.inventoryStatus ? slotProps.data.inventoryStatus.toLowerCase() : '')">{{slotProps.data.inventoryStatus}}</span>
             </template>
@@ -58,7 +65,7 @@
           </pv-column>
         </pv-data-table>
       </div>
-
+      <pv-toast />
       <pv-dialog v-model:visible="productDialog" :style="{width: '450px'}" header="Product Details" :modal="true" class="p-fluid">
         <img src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png" :alt="product.image" class="product-image" v-if="product.image" />
         <div class="field">
@@ -191,8 +198,23 @@ export default {
   mounted() {
     this.getAll();
   },
-  methods:{
-    getAll(){
+  methods: {
+    getDisplayStatus(dat){
+      dat.inventoryStatus=dat.active ? this.statuses[0].label : this.statuses[1].label;
+      return dat;
+    },
+    getNewProduct(res){
+      return{
+        id:res.id,
+        name:res.name,
+        description:res.description,
+        inventoryStatus:res.inventoryStatus.label==="INSTOCK",
+        category:res.category,
+        price:res.price,
+        quantity:res.quantity
+      };
+    },
+    getAll() {
       this.productService.getProducts().then(data => {this.products=data.data;});
     },
     formatCurrency(value) {
@@ -201,14 +223,15 @@ export default {
       return;
     },
     deleteProduct() {
-      this.productService.delete(this.product.id).then(data => {
-        this.products=this.products.filter(val => val.id !== this.product.id);});
-      this.products = this.products.filter(val => val.id !== this.product.id);
-      this.deleteProductDialog = false;
-      this.product = {};
-      this.$toast.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
-
+      this.productService.delete(this.product.id).then(data =>{
+        this.products = this.products.filter(val => val.id !== this.product.id);
+        this.deleteProductDialog = false;
+        this.product = {};
+        this.$toast.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
+        console.log(data);
+      });
     },
+
     openNew() {
       this.product = {};
       this.submitted = false;
@@ -218,21 +241,26 @@ export default {
       this.productDialog = false;
       this.submitted = false;
     },
-    saveProduct() {
+    async saveProduct() {
       this.submitted = true;
       if (this.product.name.trim()) {
-        if (this.product.id) {
-          this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value: this.product.inventoryStatus;
-          this.products[this.findIndexById(this.product.id)] = this.product;
-          this.$toast.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
+        if (this.findSame(this.product.id)) {
+          this.product=this.getNewProduct(this.product);
+          this.productService.update(this.product.id,this.product).then(data=> {
+            this.products[this.findIndexById(data.data.id)] = this.getDisplayStatus(data.data);
+            this.$toast.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
+            console.log(data);
+          });
         }
         else {
-          this.product.id = this.createId();
-          this.product.code = this.createId();
-          this.product.image = 'product-placeholder.svg';
-          this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
-          this.products.push(this.product);
-          this.$toast.add({severity:'success', summary: 'Successful', detail: 'Product Created', life: 3000});
+          this.product=this.getNewProduct(this.product);
+          this.productService.create(this.product).then((data) => {
+            this.product.image = 'product-placeholder.svg';
+            this.product=this.getDisplayStatus(data.data);
+            this.products.push(this.product);
+            this.$toast.add({severity:'success', summary: 'Successful', detail: 'Product Created', life: 3000});
+            console.log(data);
+          });
         }
         this.productDialog = false;
         this.product = {};
@@ -246,13 +274,7 @@ export default {
       this.product = product;
       this.deleteProductDialog = true;
     },
-    deleteProduct() {
-      this.products = this.products.filter(val => val.id !== this.product.id);
-      this.deleteProductDialog = false;
-      this.product = {};
-      this.$toast.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
-      this.productService.delete(this.product.id).then(data => {this.products=data.data;});
-    },
+
     findIndexById(id) {
       let index = -1;
       for (let i = 0; i < this.products.length; i++) {
@@ -262,6 +284,13 @@ export default {
         }
       }
       return index;
+    },
+    findSame(id) {
+      for (let i = 0; i < this.products.length; i++) {
+        if (this.products[i].id === id) {
+          return true;
+        }
+      }
     },
     createId() {
       let id = '';
@@ -278,10 +307,16 @@ export default {
       this.deleteProductsDialog = true;
     },
     deleteSelectedProducts() {
-      this.products = this.products.filter(val => !this.selectedProducts.includes(val));
-      this.deleteProductsDialog = false;
-      this.selectedProducts = null;
-      this.$toast.add({severity:'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
+
+      for (let i = 0; i < this.selectedProducts.length; i++) {
+        this.productService.delete(this.selectedProducts[i].id).then(response=>{
+          this.products = this.products.filter(val => !this.selectedProducts.includes(val));
+          this.deleteProductsDialog = false;
+          this.selectedProducts = null;
+          this.$toast.add({severity:'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
+          console.log(response);
+        });
+      }
     },
     initFilters() {
       this.filters = {
@@ -292,6 +327,43 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media screen and (max-width: 960px) {
+    align-items: start;
+  }
+}
+input[type="text" i] {
+  padding: 8px;
+}
+.product-image {
+  width: 50px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.p-dialog .product-image {
+  width: 50px;
+  margin: 0 auto 2rem auto;
+  display: block;
+}
+
+.confirmation-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media screen and (max-width: 960px) {
+  ::v-deep(.p-toolbar) {
+    flex-wrap: wrap;
+
+    .p-button {
+      margin-bottom: 0.25rem;
+    }
+  }
+}
 
 </style>

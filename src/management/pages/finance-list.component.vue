@@ -160,6 +160,7 @@
           </pv-column>
         </pv-data-table>
       </div>
+      <pv-toast />
       <pv-dialog
         v-model:visible="financeDialog"
         :style="{ width: '450px' }"

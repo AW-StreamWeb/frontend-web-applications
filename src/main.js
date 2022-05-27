@@ -2,7 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import PrimeVue from "primevue/config";
-
+import VueToast from "vue-toast-notification";
 // PrimeVue Theme
 import "primevue/resources/themes/mdc-light-indigo/theme.css";
 import "primevue/resources/primevue.min.css";
@@ -42,7 +42,8 @@ import SplitButton from 'primevue/splitbutton';
 const app = createApp(App);
 
 app.use(router);
-
+app.use(VueToast);
+app.use(ToastService);
 app.use(
   PrimeVue,
   { ripple: true },
