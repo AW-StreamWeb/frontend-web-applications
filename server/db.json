@@ -66,7 +66,7 @@
       "id": 1,
       "name": "Blue SEA",
       "description": "Product Description",
-      "inventoryStatus": false,
+      "inventoryStatus": "INSTOCK",
       "category": "Fitness",
       "price": 79,
       "quantity": 2
