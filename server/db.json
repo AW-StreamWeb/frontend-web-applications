@@ -1,0 +1,95 @@
+{
+  "users": [
+    {
+      "email": "algo@gmail.com",
+      "password": "$2a$10$WKnZ1A1YOXYLo0yb0oketOfVvKHNUTWYp2SUU0GNteiJkSZXsM3fe",
+      "name": "holi",
+      "lastname": "boli",
+      "id": 1
+    }
+  ],
+  "machines": [
+    {
+      "id": 9,
+      "name": "dsdaddasdasd",
+      "description": "dasdsadas",
+      "lifetime": "11/11/1111",
+      "active": false
+    },
+    {
+      "id": 10,
+      "name": "adasdasd",
+      "description": "dsadsadsadsa",
+      "lifetime": "11/11/1111",
+      "active": false
+    },
+    {
+      "id": 11,
+      "name": "Visitas_Comprobante_de_Entradas",
+      "description": "dsdsds",
+      "lifetime": "11/11/1111",
+      "active": false
+    }
+  ],
+  "finances": [
+    {
+      "id": 9,
+      "name": "Comprar de material",
+      "day": "26/05/2022",
+      "quantity": 500,
+      "type": false
+    },
+    {
+      "id": 10,
+      "name": "Ventas Diarias",
+      "day": "26/05/2022",
+      "quantity": 600,
+      "type": true
+    },
+    {
+      "id": 11,
+      "name": "Ventas Diarias",
+      "day": "26/05/2022",
+      "quantity": 300,
+      "type": true
+    },
+    {
+      "id": 12,
+      "name": "Compra Tela",
+      "day": "26/05/2022",
+      "quantity": 200,
+      "type": false
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Blue SEA",
+      "description": "Product Description",
+      "inventoryStatus": "INSTOCK",
+      "category": "Fitness",
+      "price": 79,
+      "quantity": 2
+    },
+    {
+      "id": 2,
+      "name": "Blue",
+      "description": "Product Description",
+      "price": 29,
+      "category": "Clothing",
+      "quantity": 25,
+      "inventoryStatus": "INSTOCK",
+      "rating": 5
+    },
+    {
+      "id": 3,
+      "name": "Bra",
+      "description": "Product Description",
+      "price": 15,
+      "category": "Accessories",
+      "quantity": 73,
+      "inventoryStatus": "INSTOCK",
+      "rating": 4
+    }
+  ]
+}
