@@ -11,7 +11,7 @@
       <ul class="list-none p-0 m-0">
         <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
           <div class="text-500 w-6 md:w-2 font-medium">Name</div>
-          <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">Jorge Sanchez</div>
+          <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">{{this.fullName}}</div>
           <div class="w-6 md:w-2 flex justify-content-end">
             <pv-button label="Edit" icon="pi pi-pencil" class="p-button-text"></pv-button>
           </div>
@@ -35,8 +35,8 @@
           </div>
         </li>
         <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
-          <div class="text-500 w-6 md:w-2 font-medium">Country</div>
-          <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">Peru</div>
+          <div class="text-500 w-6 md:w-2 font-medium">Email</div>
+          <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">{{this.user.email}}</div>
           <div class="w-6 md:w-2 flex justify-content-end">
             <pv-button label="Edit" icon="pi pi-pencil" class="p-button-text"></pv-button>
           </div>
@@ -65,6 +65,16 @@ export default {
     pvTieredMenu,
     pvLayoutMain,
   },
+  data() {
+    return {
+      user:null,
+      fullName:null,
+    };
+  },
+  created() {
+    this.user = JSON.parse(localStorage.getItem('user'));
+    this.fullName=this.user.firstName+" "+this.user.lastName;
+  }
 
 };
 </script>

@@ -182,6 +182,7 @@ export default {
       product: {},
       selectedProducts: null,
       filters: {},
+      user:null,
       submitted: false,
       statuses: [
         {label: 'INSTOCK', value: 'instock'},
@@ -194,6 +195,7 @@ export default {
   created() {
     this.productService = new ProductsApiService();
     this.initFilters();
+    this.user = JSON.parse(localStorage.getItem('user'));
   },
   mounted() {
     this.getAll();
@@ -205,17 +207,19 @@ export default {
     },
     getNewProduct(res){
       return{
-        id:res.id,
-        name:res.name,
-        description:res.description,
-        inventoryStatus:res.inventoryStatus.label==="INSTOCK",
-        category:res.category,
-        price:res.price,
-        quantity:res.quantity
+        "name":res.name,
+        "image":res.description,
+        "inventoryStatus":res.inventoryStatus.label,
+        "category":res.category,
+        "price":res.price,
+        "quantity":res.quantity,
+        "userId":this.user.id,
       };
     },
     getAll() {
-      this.productService.getProducts().then(data => {this.products=data.data;});
+      this.productService.getByUserId(this.user.id).then(data => {
+        this.products=data.data;
+        this.products.forEach((finance) => this.getDisplayStatus(finance));});
     },
     formatCurrency(value) {
       if(value)
@@ -309,7 +313,9 @@ export default {
     deleteSelectedProducts() {
 
       for (let i = 0; i < this.selectedProducts.length; i++) {
-        this.productService.delete(this.selectedProducts[i].id).then(response=>{
+        this.productService
+          .delete(this.selectedProducts[i].id)
+          .then((response) => {
           this.products = this.products.filter(val => !this.selectedProducts.includes(val));
           this.deleteProductsDialog = false;
           this.selectedProducts = null;

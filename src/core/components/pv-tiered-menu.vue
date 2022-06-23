@@ -1,6 +1,8 @@
 <template>
   <div class="layout-sidebar align-content-center">
     <tiered-menu :model="items" class="bg-blue-700 block font-normal " >
+        <router-link :to="items.to">
+        </router-link>
     </tiered-menu>
     <pv-button class="pi pi-fw pi-power-off" @click="this.signOut()"></pv-button>
     <pv-split-button class="ml-3 mt-5" label="Language" :model="languages"></pv-split-button>
@@ -8,13 +10,14 @@
 </template>
 
 <script>
-import UsersApiService from "../../management/services/users-api.service";
+
+import AuthService from "../../security/services/auth.service";
 
 export default {
   name: "pv-tiered-menu",
   UserService:null,
   created() {
-    this.UserService=new UsersApiService();
+    this.UserService=new AuthService();
   },
   data() {
     return {

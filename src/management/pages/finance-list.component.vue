@@ -327,11 +327,13 @@ export default {
         { label: "Spent", value: "spent" },
       ],
       financesService: null,
+      user:null,
     };
   },
   created() {
+    this.user = JSON.parse(localStorage.getItem('user'));
     this.financesService = new FinancesApiService();
-    this.financesService.getAll().then((response) => {
+    this.financesService.getByUserId(this.user.id).then((response) => {
       this.finances = response.data;
       this.finances.forEach((finance) => this.getDisplayableFinance(finance));
       console.log(this.finances);
@@ -348,11 +350,11 @@ export default {
     getStorableFinance(displayableFinance) {
       console.log(displayableFinance);
       return {
-        id: displayableFinance.id,
-        name: displayableFinance.name,
-        day: displayableFinance.day,
-        quantity: displayableFinance.quantity,
-        type: displayableFinance.status.label === "Income",
+        "name": displayableFinance.name,
+        "day": displayableFinance.day,
+        "quantity": displayableFinance.quantity,
+        "type": displayableFinance.status.label === "Income",
+        "userId":this.user.id,
       };
     },
     initFilters() {

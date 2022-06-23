@@ -6,6 +6,9 @@ export class FinancesApiService {
   getById(id) {
     return http.get(`/finances/${id}`);
   }
+  getByUserId(userId){
+    return http.get(`/users/${userId}/finances`)
+  }
   create(data) {
     return http.post("/finances", data);
   }
