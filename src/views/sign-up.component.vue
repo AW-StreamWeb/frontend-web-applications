@@ -187,6 +187,12 @@
                   :class="{ 'p-error': v$.accept.$invalid && submitted }"
                 >I agree to the terms and conditions*</label
                 >
+                  <div class = "block ml-20">
+                      <span class="text-600 font-medium line-height-3">Do you have an account?</span>
+                      <router-link to="/sign-in">
+                          <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Sign in!</a>
+                      </router-link>
+                  </div>
               </div>
 
               <pv-button type="submit" label="Submit" class="mt-2" @click="UserRegister()" />
@@ -301,6 +307,12 @@ export default {
   .h1 {
     font-size: large;
   }
+    .ml-20{
+        margin-left: 20px;
+    }
+    .block{
+        display: block;
+    }
   @media screen and (max-width: 960px) {
     .card {
       width: 80%;

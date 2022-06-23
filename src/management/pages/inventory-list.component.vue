@@ -2,6 +2,9 @@
   <pv-menu-bar></pv-menu-bar>
   <pv-tiered-menu></pv-tiered-menu>
   <pv-layout-main>
+      <h1>
+        INVENTORY
+      </h1>
     <div>
       <div class="card">
         <pv-toolbar class="mb-4">

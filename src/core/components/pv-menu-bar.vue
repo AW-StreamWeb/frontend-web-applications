@@ -11,7 +11,7 @@
       />
     </template>
     <template #end>
-      <pv-input-text placeholder="Search" type="text" />
+
     </template>
   </pv-menubar>
 </header>
@@ -27,12 +27,6 @@ export default {
     return {
       checked: false,
       items: [
-        {
-          label: "Notifications",
-          icon: "pi pi-fw pi-bell",
-          to:"/notifications",
-
-        },
         {
           label: "Profile",
           icon: "pi pi-fw pi-user",
