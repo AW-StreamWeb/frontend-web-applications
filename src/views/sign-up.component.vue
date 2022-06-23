@@ -208,7 +208,6 @@
 <script>
 import { email, required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
-import { mapActions } from "vuex";
 import AuthService from "../security/services/auth.service";
 export default {
   name: "sign-up.component",
@@ -252,7 +251,6 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["Register"]),
      UserRegister(){
       let data = {
         "firstName":this.namev,

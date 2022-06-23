@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
 import AuthService from "../security/services/auth.service";
 
 export default {
@@ -56,7 +55,6 @@ export default {
     }
   },
   methods:{
-    ...mapActions(["LogIn"]),
     logeado(){
       let data={
         "email":this.email1,
