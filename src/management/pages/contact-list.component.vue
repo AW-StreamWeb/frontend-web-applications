@@ -300,11 +300,13 @@ export default {
         { label: "Inactive", value: "inactive" },
       ],
       contactsService: null,
+      user:null,
     };
   },
   created() {
+    this.user = JSON.parse(localStorage.getItem('user'));
     this.contactsService = new ContactsApiService();
-    this.contactsService.getAll().then((response) => {
+    this.contactsService.getByUserId(this.user.id).then((response) => {
       this.contacts = response.data;
       this.contacts.forEach((contact) =>
         this.getDisplayableContact(contact)
@@ -322,11 +324,11 @@ export default {
     },
     getStorableContact(displayableContact) {
       return {
-        id: displayableContact.id,
-        name: displayableContact.name,
-        description: displayableContact.description,
-        lifetime: displayableContact.lifetime,
-        active: displayableContact.status.label === "Active",
+        "name": displayableContact.name,
+        "description": displayableContact.description,
+        "lifetime": displayableContact.lifetime,
+        "active": displayableContact.status.label === "Active",
+        "userId":this.user.id,
       };
     },
     initFilters() {

@@ -287,11 +287,14 @@ export default {
         { label: "Inactive", value: "inactive" },
       ],
       machinesService: null,
+
+      user:null,
     };
   },
   created() {
+    this.user = JSON.parse(localStorage.getItem('user'));
     this.machinesService = new MachinesApiService();
-    this.machinesService.getAll().then((response) => {
+    this.machinesService.getByUserId(this.user.id).then((response) => {
       this.machines = response.data;
       this.machines.forEach((machine) =>
         this.getDisplayableMachine(machine)
@@ -309,11 +312,11 @@ export default {
     },
     getStorableMachine(displayableMachine) {
       return {
-        id: displayableMachine.id,
-        name: displayableMachine.name,
-        description: displayableMachine.description,
-        lifetime: displayableMachine.lifetime,
-        active: displayableMachine.status.label === "Active",
+        "name": displayableMachine.name,
+        "description": displayableMachine.description,
+        "lifetime": displayableMachine.lifetime,
+        "active": displayableMachine.status.label === "Active",
+        "userId": this.user.id,
       };
     },
     initFilters() {

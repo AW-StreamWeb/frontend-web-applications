@@ -9,6 +9,10 @@ export class ContactsApiService {
   create(data) {
     return http.post("/contacts", data);
   }
+  getByUserId(userId){
+    return http.get(`/users/${userId}/contacts`)
+  }
+
   update(id, data) {
     return http.put(`/contacts/${id}`, data);
   }

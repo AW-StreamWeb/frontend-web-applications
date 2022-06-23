@@ -6,6 +6,9 @@ export class MachinesApiService {
   getById(id) {
     return http.get(`/machines/${id}`);
   }
+  getByUserId(userId){
+    return http.get(`/users/${userId}/machines`)
+  }
   create(data) {
     return http.post("/machines", data);
   }

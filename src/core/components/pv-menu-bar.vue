@@ -5,7 +5,7 @@
     <template #start>
       <img
         alt="logo"
-        src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png"
+        src="https://i.ibb.co/FhmymhD/Imagen1.png"
         height="40"
         class="mr-5"
       />

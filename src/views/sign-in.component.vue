@@ -38,29 +38,40 @@
 </template>
 
 <script>
-import UsersApiService from "../management/services/users-api.service";
+import {mapActions} from "vuex";
+import AuthService from "../security/services/auth.service";
 
 export default {
   name: "sign-in.component",
   UserService:null,
   created() {
-    this.UserService=new UsersApiService();
+    this.UserService = new AuthService();
   },
   data() {
     return {
       email1: "",
       password1: "",
+      showError:false,
     }
   },
   methods:{
+    ...mapActions(["LogIn"]),
     logeado(){
       let data={
         "email":this.email1,
         "password":this.password1
       };
-      this.UserService.singIn(data).then((res) => {
-        this.UserService.setCurrentUser(JSON.stringify(res.data.user));
-        console.log(res.data.user);
+
+      /*try{
+        await this.LogIn(data);
+        this.$router.push('/home');
+        this.showError=false
+      }catch (error){
+        this.showError=true
+      }*/
+
+      this.UserService.signIn(data).then((res) => {
+        console.log(res.firstName);
         this.$router.push('/home');
       });
     },

@@ -1,82 +1,310 @@
 <template>
-  <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
-    <div class="text-center mb-5">
-      <img src="https://i.ibb.co/0X3zw1N/Logo.png" alt="Logo" height="50" class="mb-3">
-      <div class="text-900 text-3xl font-medium mb-3">Welcome Back</div>
-      <span class="text-600 font-medium line-height-3">Don't have an account?</span>
-      <router-link to="/sign-up">
-        <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</a>
-      </router-link>
-
+  <body>
+  <div class="grid grid-nogutter surface-section text-900">
+    <div class="col-12 md:col-6 overflow-hidden">
+      <img
+        src="https://i.ibb.co/YLzWHKD/signup.png"
+        alt="Image"
+        class="md:ml-auto block md:h-full md:w-full"
+      />
     </div>
 
-    <div>
-      <label for="email1" class="block text-900 font-medium mb-2">Email</label>
-      <pv-input-text :id="email1" v-model="email1" type="text" class="w-full mb-3" />
+    <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
+      <div class="form-demo">
+        <pv-dialog
+          v-model:visible="showMessage"
+          :breakpoints="{ '960px': '80vw' }"
+          :style="{ width: '30vw' }"
+          position="top"
+        >
+          <div class="flex align-items-center flex-column pt-6 px-3">
+            <i
+              class="pi pi-check-circle"
+              :style="{ fontSize: '5rem', color: 'var(--green-500)' }"
+            ></i>
+            <h5>Registration Successful!</h5>
+            <p :style="{ lineHeight: 1.5, textIndent: '1rem' }">
+              Your account is registered under name <b>{{ namev }}</b> ; it'll
+              be valid . Please check <b>{{ email }}</b> for activation
+              instructions.
+            </p>
+          </div>
+          <template #footer>
+            <div class="flex justify-content-center">
+              <pv-button label="OK" @click="goHome" class="p-button-text" />
+            </div>
+          </template>
+        </pv-dialog>
 
-      <label for="password1" class="block text-900 font-medium mb-2">Password</label>
-      <pv-input-text  toggleMask :id="password1" v-model="password1" type="password" class="w-full mb-3" />
+        <div class="flex justify-content-center">
+          <div class="card">
+            <h1 class="text-center">Register</h1>
+            <form
+              @submit.prevent="handleSubmit(!v$.$invalid)"
+              class="p-fluid"
+            >
+              <div class="field">
+                <div class="p-float-label">
+                  <pv-input-text
+                    :id="namev"
+                    v-model="v$.namev.$model"
+                    :class="{ 'p-invalid': v$.namev.$invalid && submitted }"
+                  />
+                  <label
+                    for="namev"
+                    :class="{ 'p-error': v$.namev.$invalid && submitted }"
+                  >Name*</label
+                  >
+                </div>
+                <small
+                  v-if="
+                      (v$.namev.$invalid && submitted) ||
+                      v$.namev.$pending.$response
+                    "
+                  class="p-error"
+                >{{
+                    v$.namev.required.$message.replace("Value", "Namev")
+                  }}</small
+                >
+              </div>
+              <div class="field">
+                <div class="p-float-label">
+                  <pv-input-text
+                    :id="lastn"
+                    v-model="v$.lastn.$model"
+                    :class="{ 'p-invalid': v$.lastn.$invalid && submitted }"
+                  />
+                  <label
+                    for="lastn"
+                    :class="{ 'p-error': v$.lastn.$invalid && submitted }"
+                  >Last Name*</label
+                  >
+                </div>
+                <small
+                  v-if="
+                      (v$.namev.$invalid && submitted) ||
+                      v$.namev.$pending.$response
+                    "
+                  class="p-error"
+                >{{
+                    v$.namev.required.$message.replace("Value", "Namev")
+                  }}</small
+                >
+              </div>
+              <div class="field">
+                <div class="p-float-label p-input-icon-right">
+                  <i class="pi pi-envelope" />
+                  <pv-input-text
+                    :id="email"
+                    v-model="v$.email.$model"
+                    :class="{ 'p-invalid': v$.email.$invalid && submitted }"
+                    aria-describedby="email-error"
+                  />
+                  <label
+                    for="email"
+                    :class="{ 'p-error': v$.email.$invalid && submitted }"
+                  >Email*</label
+                  >
+                </div>
+                <span v-if="v$.email.$error && submitted">
+                    <span
+                      id="email-error"
+                      v-for="(error, index) of v$.email.$errors"
+                      :key="index"
+                    >
+                      <small class="p-error">{{ error.$message }}</small>
+                    </span>
+                  </span>
+                <small
+                  v-else-if="
+                      (v$.email.$invalid && submitted) ||
+                      v$.email.$pending.$response
+                    "
+                  class="p-error"
+                >{{
+                    v$.email.required.$message.replace("Value", "Email")
+                  }}</small
+                >
+              </div>
+              <div class="field">
+                <div class="p-float-label">
+                  <pv-password
+                    :id="password"
+                    v-model="v$.password.$model"
+                    :class="{
+                        'p-invalid': v$.password.$invalid && submitted,
+                      }"
+                    toggleMask
+                  >
+                    <template #header>
+                      <h6>Pick a password</h6>
+                    </template>
+                    <template #footer="sp">
+                      {{ sp.level }}
+                      <Divider />
+                      <p class="mt-2">Suggestions</p>
+                      <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                        <li>At least one lowercase</li>
+                        <li>At least one uppercase</li>
+                        <li>At least one numeric</li>
+                        <li>Minimum 8 characters</li>
+                      </ul>
+                    </template>
+                  </pv-password>
+                  <label
+                    for="password"
+                    :class="{ 'p-error': v$.password.$invalid && submitted }"
+                  >Password*</label
+                  >
+                </div>
+                <small
+                  v-if="
+                      (v$.password.$invalid && submitted) ||
+                      v$.password.$pending.$response
+                    "
+                  class="p-error"
+                >{{
+                    v$.password.required.$message.replace("Value", "Password")
+                  }}</small
+                >
+              </div>
+              <div class="field">
+                <div class="p-float-label">
+                  <pv-calendar :id="date" v-model="date" :showIcon="true" />
+                  <label for="date">Birthday</label>
+                </div>
+              </div>
+              <div class="field-checkbox">
+                <pv-checkbox
+                  :id="accept"
+                  namev="accept"
+                  value="Accept"
+                  v-model="v$.accept.$model"
+                  :class="{ 'p-invalid': v$.accept.$invalid && submitted }"
+                />
+                <label
+                  for="accept"
+                  :class="{ 'p-error': v$.accept.$invalid && submitted }"
+                >I agree to the terms and conditions*</label
+                >
+              </div>
 
-      <div class="flex align-items-center justify-content-between mb-6">
-
-        <div class="flex align-items-center">
-          <pv-checkbox :id="rememberme1" :binary="true" v-model="checked" class="mr-2"></pv-checkbox>
-          <label for="rememberme1">Remember me</label>
+              <pv-button type="submit" label="Submit" class="mt-2" @click="UserRegister()" />
+            </form>
+          </div>
         </div>
-
-        <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot password?</a>
-
       </div>
-      <pv-button label="Sign In" icon="pi pi-user" class="w-full" @click="logeado()"></pv-button>
     </div>
   </div>
+  </body>
 </template>
 
 <script>
-import UsersApiService from "../management/services/users-api.service";
-
+import { email, required } from "@vuelidate/validators";
+import { useVuelidate } from "@vuelidate/core";
+import { mapActions } from "vuex";
+import AuthService from "../security/services/auth.service";
 export default {
-  name: "sign-in.component",
+  name: "sign-up.component",
+  setup: () => ({ v$: useVuelidate() }),
   UserService:null,
   created() {
-    this.UserService=new UsersApiService();
+    this.UserService=new AuthService();
   },
   data() {
     return {
-      email1: "",
-      password1: "",
-    }
+      namev: "",
+      lastn: "",
+      email: "",
+      password: "",
+      date: null,
+      country: null,
+      accept: null,
+      submitted: false,
+      showMessage: false,
+    };
   },
-  methods:{
-    logeado(){
-      let data={
-        "email":this.email1,
-        "password":this.password1
+  countryService: null,
+  validations() {
+    return {
+      namev: {
+        required,
+      },
+      lastn: {
+        required,
+      },
+      email: {
+        required,
+        email,
+      },
+      password: {
+        required,
+      },
+      accept: {
+        required,
+      },
+    };
+  },
+  methods: {
+    ...mapActions(["Register"]),
+     UserRegister(){
+      let data = {
+        "firstName":this.namev,
+        "lastName": this.lastn,
+        "email":this.email ,
+        "password":this.password
       };
-      this.UserService.singIn(data).then((res) => {
-        this.UserService.setCurrentUser(JSON.stringify(res.data.user));
-        console.log(res.data.user);
-        this.$router.push('/home');
-      });
+
+      this.UserService.signUp(data);
+
     },
-
-
-  }
+    handleSubmit(isFormValid) {
+      this.submitted = true;
+      if (!isFormValid) {
+        return;
+      }
+      this.toggleDialog();
+    },
+    toggleDialog() {
+      this.showMessage = !this.showMessage;
+      if (!this.showMessage) {
+        this.resetForm();
+      }
+    },
+    goHome() {
+      this.$router.push("/sign-in");
+    },
+    resetForm() {
+      this.namev = "";
+      this.lastn = "";
+      this.email = "";
+      this.password = "";
+      this.date = null;
+      this.accept = null;
+      this.submitted = false;
+    },
+  },
 };
 </script>
 
-<style scoped>
-.container1
-{
-  position: center;
-  bottom: 0px;
-  padding-top: 10px;
-  padding-left: 650px;
-}
-.p-float-label{
-  position: center;
-  bottom: 0px;
-  padding-top: 150px;
-  padding-left: 650px;
+<style lang="scss" scoped>
+.form-demo {
+  .card {
+    min-width: 65%;
+    form {
+      margin-top: 2rem;
+    }
+    .field {
+      margin-bottom: 1.5rem;
+    }
+  }
+  .h1 {
+    font-size: large;
+  }
+  @media screen and (max-width: 960px) {
+    .card {
+      width: 80%;
+    }
+  }
 }
 </style>
