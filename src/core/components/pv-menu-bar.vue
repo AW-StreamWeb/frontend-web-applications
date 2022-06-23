@@ -1,7 +1,7 @@
 <template>
 
 <header>
-  <pv-menubar :model="items" class="justify-content-between bg-blue-900">
+  <pv-menubar :model="items" class="justify-content-between bg-blue-900 border-none elements">
     <template #start>
       <img
         alt="logo"
@@ -46,5 +46,12 @@ export default {
 </script>
 
 <style scoped>
-  
+.border-none{
+    border:none;
+    border-radius: 0px;
+}
+.elements{
+    font-weight: bold;
+    color: yellow;
+}
 </style>

@@ -1,11 +1,11 @@
 <template>
   <div class="layout-sidebar align-content-center">
-    <tiered-menu :model="items" class="bg-blue-700 block font-normal " >
+    <tiered-menu :model="items" class="bg-blue-700 block font-normal options border-none general-menu" >
         <router-link :to="items.to">
         </router-link>
     </tiered-menu>
-    <pv-button class="pi pi-fw pi-power-off" @click="this.signOut()"></pv-button>
-    <pv-split-button class="ml-3 mt-5" label="Language" :model="languages"></pv-split-button>
+    <pv-button class="pi pi-fw pi-power-off extra" @click="this.signOut()"></pv-button>
+    <pv-split-button class="ml-3 mt-5 extra-100" label="Language" :model="languages"></pv-split-button>
   </div>
 </template>
 
@@ -95,19 +95,30 @@ export default {
 
 <style scoped>
 .layout-sidebar {
-  position: absolute;
-  width: 250px;
-  height: calc(100vh - 5.5rem);
-  z-index: 999;
-  overflow-y: auto;
-  user-select: none;
-  top: 5.2rem;
-  left: 0.5rem;
-  background-color: var(--blue-700);
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05),
+    position: absolute;
+    width: 250px;
+    height: calc(100vh - 5.5rem);
+    z-index: 999;
+    overflow-y: auto;
+    user-select: none;
+    background-color: var(--blue-700);
+    padding: 1.5rem;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05),
     0px 1px 4px rgba(0, 0, 0, 0.08);
+    border: none;
 }
-
+.extra{
+    margin-top: 15px;
+    width: 100%;
+}
+.extra-100{
+    width: 150px;
+    margin: 0 auto;
+}
+.border-none{
+    border:none;
+    border-radius: 0px;
+}
+.general-menu{
+}
 </style>
