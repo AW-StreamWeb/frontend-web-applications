@@ -374,15 +374,21 @@ export default {
       this.financeDialog = false;
       this.submitted = false;
     },
-    saveFinance() {
+    async saveFinance() {
       this.submitted = true;
+      let currentId = this.finance.id;
       if (this.finance.name.trim()) {
-        //console.log(this.finance.name.trim());
         if (this.finance.id) {
-          //console.log(this.finance.id);
           this.finance.status = this.finance.status.label ? this.finance.status.label: this.finance.status;
-                    this.finances[this.findIndexById(this.finance.id)] = this.finance;
-                    this.$toast.add({severity:'success', summary: 'Successful', detail: 'Finance Updated', life: 3000});
+          this.finance = this.getStorableFinance(this.finance);
+          this.financesService.update(currentId,this.finance).then((data)=>{
+            this.finances[this.findIndexById(data.data.id)] = data.data;
+            this.$toast.add({
+              severity:'success',
+              summary: 'Successful',
+              detail: 'Finance Updated',
+              life: 3000});
+          });
         } else {
           this.finance.id = 0;
           this.finance = this.getStorableFinance(this.finance);

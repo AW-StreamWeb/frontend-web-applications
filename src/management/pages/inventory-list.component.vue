@@ -462,7 +462,6 @@ export default {
           this.product.inventoryStatus = this.product.inventoryStatus.value
             ? this.product.inventoryStatus.value
             : this.product.inventoryStatus;
-
           this.productService.update(currentId, this.product).then((data) => {
             //this.products[this.findIndexById(data.data.id)] = this.getDisplayStatus(data.data);
             this.products[this.findIndexById(data.data.id)] = data.data;
