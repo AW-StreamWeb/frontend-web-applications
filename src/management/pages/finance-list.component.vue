@@ -434,7 +434,17 @@ export default {
     deleteSelectedFinances() {
       this.selectedFinances.forEach((finance) => {
         this.financesService.delete(finance.id).then((response) => {
-          this.finances = this.finances.filter((t) => t.id !== this.finance.id);
+          this.finances = this.finances.filter(
+            (t) =>  !this.selectedFinances.includes(t)
+        );
+          this.deleteFinancesDialog=false;
+          this.selectedFinances=null;
+          this.$toast.add({
+            severity: "success",
+            summary: "Successful",
+            detail: "Products Deleted",
+            life: 3000,
+          });
           console.log(response);
         });
       });

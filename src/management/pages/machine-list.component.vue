@@ -396,8 +396,16 @@ export default {
       this.selectedMachines.forEach((machine) => {
         this.machinesService.delete(machine.id).then((response) => {
           this.machines = this.machines.filter(
-            (t) => t.id !== this.machine.id
+            (t) => !this.selectedMachines.includes(t)
           );
+          this.deleteMachinesDialog=false;
+          this.selectedMachines=null;
+          this.$toast.add({
+            severity: "success",
+            summary: "Successful",
+            detail: "Products Deleted",
+            life: 3000,
+          });
           console.log(response);
         });
       });

@@ -408,8 +408,16 @@ export default {
       this.selectedContacts.forEach((contact) => {
         this.contactsService.delete(contact.id).then((response) => {
           this.contacts = this.contacts.filter(
-            (t) => t.id !== this.contact.id
+            (t) => !this.selectedContacts.includes(t)
           );
+          this.deleteContactsDialog=false;
+          this.selectedContacts=null;
+          this.$toast.add({
+            severity: "success",
+            summary: "Successful",
+            detail: "Products Deleted",
+            life: 3000,
+          });
           console.log(response);
         });
       });
