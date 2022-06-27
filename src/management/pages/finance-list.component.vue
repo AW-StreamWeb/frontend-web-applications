@@ -128,19 +128,19 @@
             style="min-width: 8rem"
           ></pv-column>
           <pv-column
-            field="status"
+            field="type"
             header="Status"
             :sortable="true"
             style="min-width: 8rem"
           >
             <template #body="slotProps">
               <pv-tag
-                v-if="slotProps.data.status === 'Income'"
+                v-if="slotProps.data.type === 'Income'"
                 severity="success"
-                >{{ slotProps.data.status }}</pv-tag
+                >{{ slotProps.data.type }}</pv-tag
               >
               <pv-tag v-else severity="info">{{
-                slotProps.data.status
+                slotProps.data.type
               }}</pv-tag>
             </template>
           </pv-column>
@@ -210,7 +210,7 @@
         <div class="field">
           <pv-dropdown
             id="type"
-            v-model="finance.status"
+            v-model="finance.type"
             :options="statuses"
             optionLabel="label"
             placeholder="Select an Status"
@@ -342,7 +342,7 @@ export default {
   },
   methods: {
     getDisplayableFinance(finance) {
-      finance.status = finance.type
+      finance.type= finance.type
         ? this.statuses[0].label
         : this.statuses[1].label;
       return finance;
@@ -353,7 +353,7 @@ export default {
         "name": displayableFinance.name,
         "day": displayableFinance.day,
         "quantity": displayableFinance.quantity,
-        "type": displayableFinance.status.label === "Income",
+        "type": displayableFinance.type.label === "Income",
         "userId":this.user.id,
       };
     },
@@ -379,10 +379,11 @@ export default {
       let currentId = this.finance.id;
       if (this.finance.name.trim()) {
         if (this.finance.id) {
-          this.finance.status = this.finance.status.label ? this.finance.status.label: this.finance.status;
           this.finance = this.getStorableFinance(this.finance);
           this.financesService.update(currentId,this.finance).then((data)=>{
+            data.data = this.getDisplayableFinance(data.data);
             this.finances[this.findIndexById(data.data.id)] = data.data;
+
             this.$toast.add({
               severity:'success',
               summary: 'Successful',
@@ -467,7 +468,7 @@ export default {
     SpentTotal() {
       let total = 0;
       for(let finance of this.finances){
-        if(finance.status=="Spent"){
+        if(finance.type=="Spent"){
           total+=finance.quantity;
         }
       }
@@ -476,7 +477,7 @@ export default {
     IncomeTotal() {
       let total = 0;
       for(let finance of this.finances){
-        if(finance.status=="Income"){
+        if(finance.type=="Income"){
           total+=finance.quantity;
         }
       }

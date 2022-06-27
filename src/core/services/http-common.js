@@ -1,7 +1,8 @@
+
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "https://localhost:7130/api/v1",
+  baseURL: "https://inventex.azurewebsites.net/api/v1",
   headers: { "Content-type": "application/json" },
 
 });

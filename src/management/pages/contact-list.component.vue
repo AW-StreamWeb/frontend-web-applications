@@ -90,19 +90,19 @@
             style="min-width: 8rem"
           ></pv-column>
           <pv-column
-            field="status"
+            field="active"
             header="Status"
             :sortable="true"
             style="min-width: 8rem"
           >
             <template #body="slotProps">
               <pv-tag
-                v-if="slotProps.data.status === 'Active'"
+                v-if="slotProps.data.active === 'Active'"
                 severity="success"
-              >{{ slotProps.data.status }}</pv-tag
+              >{{ slotProps.data.active }}</pv-tag
               >
               <pv-tag v-else severity="info">{{
-                  slotProps.data.status
+                  slotProps.data.active
                 }}</pv-tag>
             </template>
           </pv-column>
@@ -173,14 +173,14 @@
               mask="99/99/9999"
               required="true"
             />
-            <label for="lifetime">Lifetime</label>
+            <label for="lifetime">Birthday</label>
           </span>
         </div>
 
         <div class="field">
           <pv-dropdown
             id="active"
-            v-model="contact.status"
+            v-model="contact.active"
             :options="statuses"
             optionLabel="label"
             placeholder="Select an Status"
@@ -317,7 +317,7 @@ export default {
   },
   methods: {
     getDisplayableContact(contact) {
-      contact.status = contact.active
+      contact.active= contact.active
         ? this.statuses[0].label
         : this.statuses[1].label;
       return contact;
@@ -327,7 +327,7 @@ export default {
         "name": displayableContact.name,
         "description": displayableContact.description,
         "lifetime": displayableContact.lifetime,
-        "active": displayableContact.status.label === "Active",
+        "active": displayableContact.active.label === "Active",
         "userId":this.user.id,
       };
     },
@@ -348,13 +348,23 @@ export default {
       this.contactDialog = false;
       this.submitted = false;
     },
-    saveContact() {
+    async saveContact() {
       this.submitted = true;
+      let currentId=this.contact.id;
       if (this.contact.name.trim()) {
         if (this.contact.id) {
-          this.contact.status = this.contact.status.label ? this.contact.status.label: this.contact.status;
-          this.contacts[this.findIndexById(this.contact.id)] = this.contact;
-          this.$toast.add({severity:'success', summary: 'Successful', detail: 'Contact Updated', life: 3000});/*CHANGE*/
+          //this.contact.status = this.contact.status.label ? this.contact.status.label: this.contact.status;
+          this.contact=this.getStorableContact(this.contact);
+          this.contactsService.update(currentId,this.contact).then((data)=>{
+            data.data=this.getDisplayableContact(data.data);
+            this.contacts[this.findIndexById(data.data.id)] = data.data;
+            this.$toast.add({
+              severity:'success',
+              summary: 'Successful',
+              detail: 'Contact Updated',
+              life: 3000});/*CHANGE*/
+          })
+
         } else {
           this.contact.id = 0;
           this.contact = this.getStorableContact(this.contact);

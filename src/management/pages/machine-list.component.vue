@@ -88,19 +88,19 @@
             style="min-width: 8rem"
           ></pv-column>
           <pv-column
-            field="status"
+            field="active"
             header="Status"
             :sortable="true"
             style="min-width: 8rem"
           >
             <template #body="slotProps">
               <pv-tag
-                v-if="slotProps.data.status === 'Active'"
+                v-if="slotProps.data.active === 'Active'"
                 severity="success"
-                >{{ slotProps.data.status }}</pv-tag
+                >{{ slotProps.data.active }}</pv-tag
               >
               <pv-tag v-else severity="info">{{
-                slotProps.data.status
+                slotProps.data.active
               }}</pv-tag>
             </template>
           </pv-column>
@@ -170,7 +170,7 @@
         <div class="field">
           <pv-dropdown
             id="active"
-            v-model="machine.status"
+            v-model="machine.active"
             :options="statuses"
             optionLabel="label"
             placeholder="Select an Status"
@@ -305,7 +305,7 @@ export default {
   },
   methods: {
     getDisplayableMachine(machine) {
-      machine.status = machine.active
+      machine.active = machine.active
         ? this.statuses[0].label
         : this.statuses[1].label;
       return machine;
@@ -315,7 +315,7 @@ export default {
         "name": displayableMachine.name,
         "description": displayableMachine.description,
         "lifetime": displayableMachine.lifetime,
-        "active": displayableMachine.status.label === "Active",
+        "active": displayableMachine.active.label === "Active",
         "userId": this.user.id,
       };
     },
@@ -338,11 +338,22 @@ export default {
     },
     saveMachine() {
       this.submitted = true;
+      let currentId = this.machine.id;
       if (this.machine.name.trim()) {
         if (this.machine.id) {
-          this.machine.status = this.machine.status.label ? this.machine.status.label: this.machine.status;
-                    this.machines[this.findIndexById(this.machine.id)] = this.machine;
-                    this.$toast.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
+          //this.machine.status = this.machine.status.label ? this.machine.status.label: this.machine.status;
+          this.machine=this.getStorableMachine(this.machine);
+          this.machinesService.update(currentId,this.machine).then((data)=>{
+            data.data=this.getDisplayableMachine(data.data);
+            this.machines[this.findIndexById(data.data.id)] = data.data;
+            this.$toast.add({
+              severity:'success',
+              summary: 'Successful',
+              detail: 'Product Updated',
+              life: 3000});
+          })
+
+
         } else {
           this.machine.id = 0;
           this.machine = this.getStorableMachine(this.machine);
